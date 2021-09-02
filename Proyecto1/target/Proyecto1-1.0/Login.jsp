@@ -5,6 +5,7 @@
 --%>
 
 <%@page import="javax.swing.JOptionPane"%>
+<%@page session="true" %>
 <%@page import="java.util.Set"%>
 <%@page import="Usuarios.ValidadorDeLogin"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -13,7 +14,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Login Mi Mueblería</title>
-            <!--Scripts:-->
+            
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
@@ -25,6 +26,7 @@
         <link rel="stylesheet" type="text/css" href="resources/index.css" th:href="@{/resources/index.css}">
     </head>
     <body> 
+        <!--Login:-->
                 <div class="modal-dialog text-center">
                     <div class="col-sm-8 main-section">
                         <div class="modal-content">
@@ -51,23 +53,26 @@
                     </div>
                 </div>                                   
     </body>
+    <!--Seleccion de login:-->
     <% 
         if(request.getParameter("Comprobar")!=null){
             String CampoU = request.getParameter("user");
             String CampoP = request.getParameter("pass");
-            out.print("Campo 1: "+CampoU);
             if(!(CampoU.equals(""))&&!(CampoP.equals(""))){
                 String user = request.getParameter("user");
                 String Contra = request.getParameter("pass");
                 ValidadorDeLogin Inicio = new ValidadorDeLogin(user,Contra);
                 int[] Us = Inicio.ComprobarUsuario();
                 if(Us[0]==1){
+                    HttpSession Sesion = request.getSession();
                     switch(Us[1]){
                         case -1:
                             out.print("Contraseña incorrecta");
                             break;
                         case 1:
-                            out.print("fabrica");
+                            Sesion.setAttribute("user", CampoU);
+                            Sesion.setAttribute("nivel", "1");
+                            response.sendRedirect("Menus/Fabrica.jsp");
                             break;
                         case 2:
                             response.sendRedirect("Menus/Ventas.jsp");
@@ -86,6 +91,10 @@
             }else{  
                 out.print("llene los campos deseados mamon");
             }
+        }
+        //Cerrando sesion
+        if(request.getParameter("cerrar")!=null){
+            session.invalidate();
         }
     %>
 </html>
