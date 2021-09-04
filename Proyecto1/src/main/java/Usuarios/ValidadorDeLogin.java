@@ -3,7 +3,6 @@ package Usuarios;
 
 import BaseDeDatos.Usuarios;
 import java.sql.SQLException;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -42,17 +41,13 @@ public class ValidadorDeLogin {
                 if(Integer.parseInt(Datos[2]) == 1){
                     Credenciales[0] = 1;
                 }else if(Integer.parseInt(Datos[2]) == 0){
-                    JOptionPane.showMessageDialog(null, "retorno 0");
                     Credenciales[0] = 0;
                 }else{
-                    JOptionPane.showMessageDialog(null, "-1");
                     Credenciales[0] = -1;
                 }
                 if(Datos[0].equals(Nick)&&Datos[1].equals(Contraseña)){
-                    JOptionPane.showMessageDialog(null, "Encontro usuario y contraseña");
                     Credenciales[1] = Integer.parseInt(Datos[3]);
                 }else{
-                    JOptionPane.showMessageDialog(null, "No encontró usuario o contraseña regresa -1");
                     Credenciales[1] = -1;
                 }
             }
@@ -60,9 +55,5 @@ public class ValidadorDeLogin {
             Credenciales[0] = -1; Credenciales[1] = -1;
         }
         return Credenciales;
-    }
-    public String[] Prueba() throws SQLException{
-        String[] Cadena = User.Prueba();
-        return Cadena;
     }
 }

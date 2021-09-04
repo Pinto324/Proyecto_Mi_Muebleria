@@ -7,7 +7,6 @@ package Usuarios;
 
 import BaseDeDatos.Piezas;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
@@ -19,44 +18,64 @@ import javax.swing.JOptionPane;
 public class ControladorPieza {
     private Piezas PiezasBD;
     private ModeloPieza modelo;
-    private Connection con;
 
     public ControladorPieza() {
         PiezasBD = new Piezas();
         modelo = new ModeloPieza();    
     }
-    public void CrearPieza(String Nombre,double Costo ,int existencias){
-        PreparedStatement ps;
-        String sql;
-        modelo.setNombre(Nombre);
-        modelo.setPrecio(Costo);
-        modelo.setExistencias(existencias);
-        try{
-            con = PiezasBD.getConexion();
-            sql = " insert into Piezas (Nombre_Pieza,Costo,existencias) values (?,?,?);";
-            ps = con.prepareStatement(sql);
-            ps.setString(1, modelo.getNombre());
-            ps.setDouble(2, modelo.isPrecio());
-            ps.setInt(3, modelo.getExistencias());
-            ps.executeUpdate();
-            JOptionPane.showMessageDialog(null, "disque lo creo");
-        }catch(SQLException e){
+    public String CrearPieza(String Nombre,double Costo ,int existencias) throws SQLException{
+        if(PiezasBD.ComprobarPieza(Nombre, Costo)){
+            modelo.setNombre(Nombre);
+            modelo.setPrecio(Costo);
+            modelo.setExistencias(existencias);
+            PiezasBD.CrearPieza(modelo);
+            return "Se creo la pieza con exito";
+        }else{
+            return "Ya existe una pieza con las mismas carracteristicas";
         }
     }
-    public boolean ComprobarPieza(String Nombre,double Costo) throws SQLException{
-        ResultSet Tabla = PiezasBD.getRs();
-        boolean llave = false;
-        String[] Carac = new String[4];
-        while (Tabla.next()){
-            if(!(Tabla.getString (2).equals(Nombre))&&!(Tabla.getString(3).equals(Costo))){                
-            }else{
-                llave = true;
-            }
-        }
-        if(llave){
-            return false;
+    public String EliminarPieza(int Id){
+        if(PiezasBD.EliminarPorID(Id)){
+            return "se eliminó la pieza con exito";
         }else{
+            return "a ocurrido un error, se perdió la conexion";
+        }
+    }
+    public String[] BuscarPorId(int Id){
+        try{   
+            int Comprobador = Id;
+            String[]Datos=PiezasBD.BuscarPorID(Comprobador);
+            return Datos;
+        }catch(NumberFormatException e){
+            return null;
+        }
+    }
+    public boolean VerificarModificacion(String Nombre, String precio, String existencias){
+        try{
+            JOptionPane.showMessageDialog(null, Nombre +" "+ precio + " "+existencias);
+            double P = Double.parseDouble(precio);
+            int Ex = Integer.valueOf(existencias);
+            if(!(Nombre.equals("")) && P > 0.00 && Ex >= 0){
+                JOptionPane.showMessageDialog(null, "retorno true");
+                return true;
+            }else{
+                JOptionPane.showMessageDialog(null, "retorno false");
+                return false;
+            }
+        }catch(NullPointerException | NumberFormatException e){
+            JOptionPane.showMessageDialog(null, "null");
+            return false;
+        }
+    }
+    public boolean ModificarValor(String Id,String Nombre, String Precio, String Ex){
+                             JOptionPane.showMessageDialog(null, "entro a modificar");  
+        int Ids =  Integer.valueOf(Id);           
+        double P = Double.parseDouble(Precio);
+        int Exis = Integer.valueOf(Ex);
+        if(PiezasBD.ModificarDatos(Ids, Nombre, P, Exis)){
             return true;
+        }else{
+            return false;
         }
     }
     

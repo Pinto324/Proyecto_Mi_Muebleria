@@ -37,21 +37,33 @@
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Manejo de Piezas</a>
                                     <ul class="dropdown-menu">
                                         <li class="nav-item">
-                                            <a class="nav-link" href="OpcionesFabrica/CrearPieza.jsp">Crear Pieza</a>
+                                            <a class="nav-link" href="OpcionesFabrica/CrearPieza.jsp">Crear Piezas</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="OpcionesFabrica/ModificarPieza.jsp">Modificar Pieza</a>
+                                            <a class="nav-link" href="OpcionesFabrica/PiezasInformacion.jsp">Información de Piezas</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="OpcionesFabrica/EliminarPieza.jsp">Eliminar Pieza</a>
+                                            <a class="nav-link" href="OpcionesFabrica/ModificarPieza.jsp">Modificar Piezas</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="OpcionesFabrica/EliminarPieza.jsp">Eliminar Piezas</a>
                                         </li>
                                     </ul>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="OpcionesVentas/EnsambleDeMuebles.jsp">Ensamble de muebles</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="OpcionesVentas/ManejoDeMuebles.jsp">Manejo de piezas</a>
+                            <!--Barra de navegación de Muebles OWORANG-->
+                            <li class="nav-item-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Manejo de muebles</a>
+                                <ul class="dropdown-menu">
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="OpcionesFabrica/ConsultarMueble.jsp">Información de muebles</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="OpcionesFabrica/CrearMueble.jsp">Ensamble de muebles</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="OpcionesFabrica/ValidarMueble.jsp">Validación de muebles</a>
+                                    </li>
+                                </ul>    
                             </li>
                         </ul>
                         <ul class="navbar-nav ms-3"> 
@@ -73,7 +85,6 @@
                 <th width="200"></th>
             </tr>
         </table>-->
-        <h1>Hello World!</h1>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
     </body>
 </html>

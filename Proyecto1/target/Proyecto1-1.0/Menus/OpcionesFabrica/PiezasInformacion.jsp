@@ -1,19 +1,20 @@
 <%-- 
-    Document   : CrearPieza
-    Created on : 2/09/2021, 02:29:14
+    Document   : PiezasInformacion
+    Created on : 2/09/2021, 15:34:21
     Author     : branp
 --%>
 
 <%@page import="javax.swing.JOptionPane"%>
-<%@page import="Usuarios.ControladorPieza"%>
+<%@page import="java.sql.ResultSet"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <head>
+     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Crear pieza</title>
+        <title>Informacion de piezas</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
-    </head>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+     </head>
     <body style="background-color:#F9EED2;" >
         <!--Logeo en la pagina-->
         <%
@@ -23,6 +24,14 @@
                     out.print("<script>location.replace('../../Login.jsp');</script>");
                 }
          %>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+         <!--Información:-->
+         <jsp:useBean id="cn" class="BaseDeDatos.Conexion" scope="page"></jsp:useBean>
+         <jsp:useBean id="Pz" class="BaseDeDatos.Piezas" scope="page"></jsp:useBean>           
+                    <%
+                        ResultSet Rs = cn.IniciarConexion().executeQuery("select * from Piezas;");
+                        ResultSet ago = cn.IniciarConexion().executeQuery("select * from Piezas where existencias < 5");
+                    %>
         <!--Barra de navegación-->
         <div class="container-fluid">
             <nav class="navbar navbar-expand-md navbar-light bg-light border-3 border-bottom border-primary">
@@ -76,41 +85,74 @@
                 </div>
             </nav>     
         </div>
-        <br>
-        <br>
-        <h2 align="center">Creación de pieza</h2>
-        <table  border="4" width="600" align="center">
-            <form   method="post" action="">
-                <tr>
-                <th rowspan="5"><img src="../../resources/Imagenes/crear.png" width="140" hight="140"/></th>
-                <th>Nombre de pieza nueva</th>
-                <th><input type="text" name="NombrePieza"></input></th>
-                </tr><tr>
-                <th>Costo por pieza</th>
-                <th><input type="number" name="precio" min="0" value="0" step=".01"></input></th>
-                </tr><tr>
-                <th><input type="submit" value="Crear Pieza" name="BtnCrear"> </th>
-                </tr>
-            </form>   
-        </table>
+  <!--Logica de ordenamiento-->      
         <%
-            ControladorPieza ControlPieza = new ControladorPieza();
-            if(request.getParameter("BtnCrear")!=null){
-                try{
-                if(request.getParameter("NombrePieza")!=""&& !(Double.parseDouble(request.getParameter("precio"))<=0)){
-                    String Nombre = request.getParameter("NombrePieza");
-                    double Costo = Double.parseDouble(request.getParameter("precio"));
-                    out.print("<script type='text/javascript'>alert('"+ ControlPieza.CrearPieza(Nombre, Costo, 0) +"')</script>");
-                    }else{
-                        out.print("<script type='text/javascript'>alert('parametros con datos invalidos, porfavor revisar')</script>");
-                    }
-                }catch(NumberFormatException e){
-                    out.print("<script type='text/javascript'>alert('El precio solo puede tener numeros')</script>");
-                }catch(NullPointerException Ex){
-                    out.print("<script type='text/javascript'>alert('El precio solo puede tener numeros')</script>");
-                }
+            if((request.getParameter("OrdenarAscendente")!=null)){
+               Rs = cn.IniciarConexion().executeQuery("select * from Piezas order by existencias;");
+            }else if(request.getParameter("OrdenarDescendente")!=null){
+                 Rs = cn.IniciarConexion().executeQuery("select * from Piezas order by existencias desc;");
             }
-        %>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+                    %>  
+ <!--Ordenar Tabla de info-->
+<form   method="post" action="#">
+     <p> 
+          <p> 
+    <a>Ordenar según existencias:</a>  
+    <input type="submit" value="Ordenar de mayor a menor" name="OrdenarDescendente"> 
+    <input type="submit" value="Ordenar de menor a mayor" name="OrdenarAscendente"> 
+    <input type="submit" value="Existencias agotadas" name="Agotar"> 
+  </form>
+  <!--Tabla de info agotados-->
+    <p> 
+  <div class="container mt-5">
+    <h1>Tabla de elementos agotados/apunto de agotarse:</h1>  
+        <div class="table-responsive">
+            <table class="table table-striped">
+            <tr class="danger">
+                <th>Id de pieza</th>
+                <th>Nombre</th>
+                <th>Precio unitario</th>
+                <th>Existencias</th>
+            </tr>
+            <%
+                        while(ago.next()){          
+                    %>
+            <tr>
+                <td><%=ago.getString("Id_Pieza")%></td>
+                <td><%=ago.getString("Nombre_Pieza")%></td>
+                <td><%=ago.getString("Costo")%></td>
+                <td><%=ago.getString("existencias")%></td>
+            </tr>
+            <%                  
+                }
+                ago.close();
+                %>              
+   <!--Tabla de info-->         
+   </table>
+   <h1>Tabla de elementos:</h1>  
+    <div class="container mt-5">
+        <div class="table-responsive">
+        <table class="table table-striped">
+            <tr class="success">
+                <th>Id de pieza</th>
+                <th>Nombre</th>
+                <th>Precio unitario</th>
+                <th>Existencias</th>
+            </tr>
+            <%
+                        while(Rs.next()){          
+                    %>
+            <tr>
+                <td><%=Rs.getString("Id_Pieza")%></td>
+                <td><%=Rs.getString("Nombre_Pieza")%></td>
+                <td><%=Rs.getString("Costo")%></td>
+                <td><%=Rs.getString("existencias")%></td>
+            </tr>
+            <%                  
+                }
+                cn.CerrarConexiones();;
+                Rs.close();
+                %>          
+        </table>      
     </body>
 </html>

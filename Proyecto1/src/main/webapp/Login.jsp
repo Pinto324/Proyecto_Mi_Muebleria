@@ -42,10 +42,6 @@
                                 </div>
                                 <button type="submit" class="btn btn-primary" name="Comprobar"><i class="fas fa-sign-in-alt"></i>  Ingresar </button>
                             </form>
-                            
-                            <div th:if="${param.error}" name="Alerta" class="alert alert-danger" role="alert" hidden>
-                                Invalid username and password.
-                            </div>
                             <div id="Creador">
                                 <p> Hecho por: Brandon Pinto</p>
                             </div>
@@ -59,9 +55,7 @@
             String CampoU = request.getParameter("user");
             String CampoP = request.getParameter("pass");
             if(!(CampoU.equals(""))&&!(CampoP.equals(""))){
-                String user = request.getParameter("user");
-                String Contra = request.getParameter("pass");
-                ValidadorDeLogin Inicio = new ValidadorDeLogin(user,Contra);
+                ValidadorDeLogin Inicio = new ValidadorDeLogin(CampoU,CampoP);
                 int[] Us = Inicio.ComprobarUsuario();
                 if(Us[0]==1){
                     HttpSession Sesion = request.getSession();
@@ -89,7 +83,7 @@
                     out.print("No se encontró un usuario en el sistema con ese nombre");
                     }
             }else{  
-                out.print("llene los campos deseados mamon");
+                out.print("llene los campos deseados");
             }
         }
         //Cerrando sesion
