@@ -1,6 +1,3 @@
-Usuarios\ControladorPieza.class
 BaseDeDatos\Piezas.class
-Usuarios\ModeloPieza.class
 BaseDeDatos\Conexion.class
-Usuarios\ValidadorDeLogin.class
 BaseDeDatos\Usuarios.class

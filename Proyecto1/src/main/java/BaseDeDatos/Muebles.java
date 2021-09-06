@@ -1,7 +1,7 @@
 
 package BaseDeDatos;
 
-import Usuarios.ModeloPieza;
+import Controles.ModeloPieza;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -59,6 +59,19 @@ public class Muebles {
             return true;
         }     
     }
+    public double RetornarPrecio (String Nombre) throws SQLException{
+        Con = new Conexion();
+        double Precio = -1.00;
+        ResultSet Tabla = Con.IniciarConexion().executeQuery("select * from muebles;");
+        while (Tabla.next()){
+            if(Nombre.equals(Tabla.getString(1))){
+                Precio = Tabla.getDouble(4);
+            }
+        }
+        Con.CerrarConexiones();
+        return Precio;
+    }
+    
     public boolean ComprobarEnsamble(String[] Datos) throws SQLException{
         Con = new Conexion();
         ResultSet Tabla = Con.IniciarConexion().executeQuery("select * from ensamble_muebles;");
@@ -115,6 +128,35 @@ public class Muebles {
                         PreparedStatement cambio = Con.getConexion().prepareStatement(Ssql);
                         cambio.setInt(1, Carac);
                         cambio.setString(2, Nombre);
+                        cambio.executeUpdate();
+                        Con.CerrarConexiones();
+                        return true;
+                    }
+        }catch(SQLException e){
+        }
+        return false;
+    }
+    
+    public boolean VenderExistencias(String NM){
+        try{
+            Con = new Conexion();
+            Con.IniciarConexion();
+            ResultSet BusquedaID = Con.IniciarConexion().executeQuery("SELECT * FROM Muebles WHERE Nombre='"+NM+"';");
+            int Carac;
+            int Venta;
+                if(BusquedaID.next()){
+                    Venta = BusquedaID.getInt(5);
+                    Carac = BusquedaID.getInt(6);
+                }else{
+                    Venta = -1;
+                    Carac = -1;
+                }
+                    if(Carac!= -1){
+                        String Ssql = "UPDATE Muebles SET Existencias=?,VecesVendido=? WHERE Nombre=?";
+                        PreparedStatement cambio = Con.getConexion().prepareStatement(Ssql);
+                        cambio.setInt(1, (Carac-1));
+                        cambio.setInt(2, (Venta+1));
+                        cambio.setString(3, NM);
                         cambio.executeUpdate();
                         Con.CerrarConexiones();
                         return true;

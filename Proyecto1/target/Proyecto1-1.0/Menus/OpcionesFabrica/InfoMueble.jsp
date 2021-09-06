@@ -4,11 +4,12 @@
     Author     : branp
 --%>
 
+<%@page import="BaseDeDatos.Usuarios"%>
 <%@page import="javax.swing.JOptionPane"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.util.Calendar"%>
-<%@page import="Usuarios.ValidadorDeLogin"%>
+<%@page import="Controles.ValidadorDeLogin"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -98,9 +99,9 @@
 <form   method="post" action="#">
      <p> 
           <p> 
-    <a>Ordenar según existencias:</a>  
-    <input type="submit" value="Ordenar por fecha más reciente" name="OrdenarDescendente"> 
-    <input type="submit" value="Ordenar por fecha más separada" name="OrdenarAscendente"> 
+    <a>Ordenar según fecha:</a>  
+    <input type="submit" value="Más recientes primero" name="OrdenarDescendente"> 
+    <input type="submit" value="Más antiguos primero" name="OrdenarAscendente"> 
     <input type="submit" value="Recargar tabla" name="Agotar"> 
   </form>
   <!--Tabla de info agotados-->

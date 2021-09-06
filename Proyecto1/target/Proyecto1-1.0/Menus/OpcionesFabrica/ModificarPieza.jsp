@@ -24,7 +24,7 @@
                 }
          %>
          <jsp:useBean id="cn" class="BaseDeDatos.Conexion" scope="page"></jsp:useBean>
-         <jsp:useBean id="Pieza" class="Usuarios.ControladorPieza" scope="page"></jsp:useBean>   
+         <jsp:useBean id="Pieza" class="Controles.ControladorPieza" scope="page"></jsp:useBean>   
          <jsp:useBean id="Pz" class="BaseDeDatos.Piezas" scope="page"></jsp:useBean>   
                     <%
                         ResultSet Rs = cn.IniciarConexion().executeQuery("select * from Piezas;");

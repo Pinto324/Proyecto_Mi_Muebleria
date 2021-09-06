@@ -5,7 +5,7 @@
 --%>
 
 <%@page import="javax.swing.JOptionPane"%>
-<%@page import="Usuarios.ControladorPieza"%>
+<%@page import="Controles.ControladorPieza"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>

@@ -48,7 +48,7 @@
                                             <a class="nav-link" href="OpcionesAdmin/UsuariosCreacion.jsp">Crear Usuarios</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="OpcionesAdmin/ModificarPieza.jsp">Modificar Usuarios</a>
+                                            <a class="nav-link" href="OpcionesAdmin/UsuariosModificacion.jsp">Modificar Usuarios</a>
                                         </li>
                                     </ul>
                             </li>
@@ -90,31 +90,11 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
 <!--Tabla de info--> 
         <p>
-       <h1>Resumenes:</h1>  
-    <div class="container mt-5">
-        <h1>Tabla de los ultimas piezas creadas:</h1>
-        <div class="table-responsive">
-        <table class="table table-striped">
-            <tr class="success">
-                <th>Id de pieza</th>
-                <th>Nombre</th>
-                <th>Precio unitario</th>
-                <th>Existencias</th>
-            </tr>
-            <%
-                        while(Rs.next()){          
-                    %>
-            <tr>
-                <td><%=Rs.getString("Id_Pieza")%></td>
-                <td><%=Rs.getString("Nombre_Pieza")%></td>
-                <td><%=Rs.getString("Costo")%></td>
-                <td><%=Rs.getString("existencias")%></td>
-            </tr>
+       <h1>Resumen:</h1> 
             <%                  
-                }
+            
                 Rs = cn.IniciarConexion().executeQuery("SELECT * FROM Muebles ORDER BY DATE_FORMAT(FechaEnsamble, '%Y%m%d') desc;");
                 %>          
-        </table>  
         <!--Tabla de info--> 
         <p> 
     <div class="container mt-5">

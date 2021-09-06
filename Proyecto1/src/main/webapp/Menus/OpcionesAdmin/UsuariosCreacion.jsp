@@ -4,6 +4,8 @@
     Author     : branp
 --%>
 
+<%@page import="javax.swing.JOptionPane"%>
+<%@page import="BaseDeDatos.Usuarios"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -25,7 +27,7 @@
         <div class="container-fluid">
             <nav class="navbar navbar-expand-md navbar-light bg-light border-3 border-bottom border-primary">
                 <div class="container-fluid">
-                    <a href="#" class="navbar-brand">Mi Muebleria</a>
+                    <a href="../Administracion.jsp" class="navbar-brand">Mi Muebleria</a>
                     <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#Navegacion">
                         <span class="navbar-toggler-icon"></span>
                     </button>
@@ -33,13 +35,13 @@
                         <ul class="navbar-nav"> 
                             <li class="nav-item dropdown">
                                 <!--Barra de navegación de piezas-->
-                                <a class="nav-link dropdown-toggle" href="../Administracion.jsp" role="button" data-bs-toggle="dropdown">Manejo de Usuarios</a>
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Manejo de Usuarios</a>
                                     <ul class="dropdown-menu">
                                         <li class="nav-item">
                                             <a class="nav-link" href="UsuariosCreacion.jsp">Crear Usuarios</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="ModificarPieza.jsp">Modificar Usuarios</a>
+                                            <a class="nav-link" href="UsuariosModifcacion.jsp">Modificar Usuarios</a>
                                         </li>
                                     </ul>
                             </li>
@@ -86,8 +88,8 @@
                 <th>Nombre del usuario nuevo</th>
                 <th><input type="text" name="Nombre"></input></th>
                 </tr><tr>
-                <th>Costo por pieza</th>
-                <th><input type="text" name="Contraseña"></input></th>
+                <th>Contraseña:</th>
+                <th><input type="password" name="Contra"></input></th>
                 </tr><tr>
                     <!--Codigo para combobox:--> 
                     <th><select name="IDC" onchange="CambiarDatos()">
@@ -101,11 +103,13 @@
         </table>
         <%
             if(request.getParameter("BtnCrear")!=null){
+                Usuarios CU = new Usuarios();
                 try{
                 if(request.getParameter("Nombre")!=""&&request.getParameter("Contraseña")!=""){
                     String Nombre = request.getParameter("Nombre");
-                    String contra = request.getParameter("Contraseña");
-                    out.print("<script type='text/javascript'>alert('"+ ControlPieza.CrearPieza(Nombre, Costo, 0) +"')</script>");
+                    String contra = request.getParameter("Contra");
+                    int Area = Integer.valueOf(request.getParameter("IDC"));
+                    out.print("<script type='text/javascript'>alert('"+ CU.CrearUsuario(Nombre, contra, Area) +"')</script>");
                     }else{
                         out.print("<script type='text/javascript'>alert('Campos con datos invalidos, porfavor revisar')</script>");
                     }

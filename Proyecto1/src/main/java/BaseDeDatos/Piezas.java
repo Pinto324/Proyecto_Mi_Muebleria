@@ -5,7 +5,7 @@
  */
 package BaseDeDatos;
 
-import Usuarios.ModeloPieza;
+import Controles.ModeloPieza;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -41,14 +41,12 @@ public class Piezas {
             Con.CerrarConexiones();
             Conn.close();
         } catch (SQLException ex) {
-            Logger.getLogger(Piezas.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     public boolean ComprobarPieza(String Nombre,double Costo) throws SQLException{
         Con = new Conexion();
         ResultSet Tabla = Con.IniciarConexion().executeQuery("select * from Piezas;");
         boolean llave = false;
-        String[] Carac = new String[4];
         while (Tabla.next()){
             if(!(Tabla.getString (2).equals(Nombre))&&!(Tabla.getString(3).equals(Costo))){                
             }else{
@@ -127,7 +125,6 @@ public class Piezas {
                 Con.CerrarConexiones();
                 return Carac;            
         } catch (SQLException ex) {
-            Logger.getLogger(Piezas.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }

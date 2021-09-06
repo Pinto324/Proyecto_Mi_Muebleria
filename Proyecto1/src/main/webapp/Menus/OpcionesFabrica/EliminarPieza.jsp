@@ -89,7 +89,7 @@
                 <th rowspan="5"><img src="../../resources/Imagenes/eliminar.png" width="140" hight="140"/></th>
                 <th>Seleccione el id de la pieza que desea eliminar</th>
                 <th><select name="IDC" onchange="CambiarDatos()">
-                    <option value="0">Elige una opción</option>
+                    <option>Elige una opción</option>
                     <!--Codigo para combobox:--> 
                     <%
                         while(Rs.next()){          
@@ -103,9 +103,15 @@
                     %>                   
                     <tr>
                     <th>Nombre de pieza</th>
-                    <%if(request.getParameter("IDC")!=null){%>
+                   <% 
+                    try{
+                    if(!(request.getParameter("IDC").equals("Elige una opción"))){%>
                         <input type="text" name="Id" value="<%=Datos[0]%>" hidden/>
-                    <%}%>
+                    <%}
+                    }catch(NullPointerException e){
+                        out.print("<script type='text/javascript'>alert('A ocurrido un error, redirigiendo a pagina inicial')</script>");
+                        out.print("<script>location.replace('../Fabrica.jsp');</script>");
+                    }%>
                     <th><input type="text" name="Nombre" value="<%=Datos[1]%>" disabled></input></th>
                     </tr><tr>
                         <th>Costo</th>

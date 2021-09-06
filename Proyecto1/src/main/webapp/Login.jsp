@@ -7,7 +7,7 @@
 <%@page import="javax.swing.JOptionPane"%>
 <%@page session="true" %>
 <%@page import="java.util.Set"%>
-<%@page import="Usuarios.ValidadorDeLogin"%>
+<%@page import="Controles.ValidadorDeLogin"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -38,7 +38,7 @@
                                     <input type="text" class="form-control" placeholder="Nombre de usuario" name="user" value=""/>
                                 </div>
                                 <div class="form-group" id="contrasena-group">
-                                    <input type="password" class="form-control" placeholder="Contrasena" name="pass"/>
+                                    <input type="password" class="form-control" placeholder="Contraseña" name="pass"/>
                                 </div>
                                 <button type="submit" class="btn btn-primary" name="Comprobar"><i class="fas fa-sign-in-alt"></i>  Ingresar </button>
                             </form>
@@ -70,6 +70,9 @@
                             response.sendRedirect("Menus/Fabrica.jsp");
                             break;
                         case 2:
+                            Sesion.setAttribute("user", CampoU);
+                            Sesion.setAttribute("nivel", "2");
+                            Inicio.setNombreUsuario(CampoU);
                             response.sendRedirect("Menus/Ventas.jsp");
                             break;
                         case 3:

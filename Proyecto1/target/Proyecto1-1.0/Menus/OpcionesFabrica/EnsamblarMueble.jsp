@@ -17,7 +17,7 @@
     <body style="background-color:#F9EED2;" >
         <!--Logeo en la pagina-->
         <jsp:useBean id="cn" class="BaseDeDatos.Conexion" scope="page"></jsp:useBean>
-        <jsp:useBean id="CM" class="Usuarios.ControladorMuebles" scope="page"></jsp:useBean>
+        <jsp:useBean id="CM" class="Controles.ControladorMuebles" scope="page"></jsp:useBean>
         <%
             HttpSession Sesion = request.getSession();
                 if(Sesion.getAttribute("user")!=null&&Sesion.getAttribute("nivel")!=null){                    
@@ -25,7 +25,7 @@
                     out.print("<script>location.replace('../../Login.jsp');</script>");
                 }
                 ResultSet Rs = cn.IniciarConexion().executeQuery("select * from muebles;");
-
+                ResultSet MD = cn.IniciarConexion().executeQuery("select * from ensamble_muebles;");
          %>
          
           <!--Barra de navegación-->
@@ -94,7 +94,7 @@
                         <% } %>                       
                    </select>              
                    <% if((request.getParameter("BtnCargar")!=null)&&!(request.getParameter("IDC").equals("0"))){
-                        if(!(request.getParameter("BtnCargar").equals(""))&&!(request.getParameter("IDC").equals("Seleccione una opcion"))){       
+                        if(CM.ListaDeMueblesEnsamblados(MD,request.getParameter("IDC"))){  
                            Rs = cn.IniciarConexion().executeQuery("select * from ensamble_muebles WHERE NombreDeMueble = '"+request.getParameter("IDC") + "' ;");
                            CM.setMuebleActual(request.getParameter("IDC"));
                         %>
@@ -130,7 +130,9 @@
             </tr>
                 </table>      
               <%
-                  }
+                  }else{
+                        out.print("<script type='text/javascript'>alert('El mueble elegido no cuenta con ensamble en este momento')</script>");
+                        }
                     }else if((request.getParameter("BtnEnsamblar")!=null)){
                         Rs = cn.IniciarConexion().executeQuery("select * from ensamble_muebles WHERE NombreDeMueble = '"+CM.getMuebleActual() + "' ;");  
                         out.print("<script type='text/javascript'>alert('"+CM.CrearExistencia(Rs, CM.getMuebleActual(),Integer.valueOf(request.getParameter("CantArmar")))+"')</script>");

@@ -4,6 +4,7 @@
     Author     : branp
 --%>
 
+<%@page import="java.sql.ResultSet"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -23,7 +24,7 @@
          %>
          <!--Fin Logeo en la pagina-->
          <jsp:useBean id="cn" class="BaseDeDatos.Conexion" scope="page"></jsp:useBean>
-         <jsp:useBean id="Mueble" class="Usuarios.ControladorMuebles" scope="page"></jsp:useBean>
+         <jsp:useBean id="Mueble" class="Controles.ControladorMuebles" scope="page"></jsp:useBean>
          <%
                 ResultSet Rs = cn.IniciarConexion().executeQuery("select * from Piezas;");
             %>
