@@ -18,7 +18,7 @@ import java.util.logging.Logger;
  * @author branp
  */
 public class Conexion {
-    private final String Nick = "root";
+    private final String Nick = "Muebleria_Admin";
     private final String Pass = "Q1W2E3R4T5Y6";
     private final String URLuser = "jdbc:mysql://localhost:3306/control_mi_muebleria";
     private ResultSet Rs;

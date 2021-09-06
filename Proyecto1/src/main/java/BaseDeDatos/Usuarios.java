@@ -3,7 +3,6 @@ package BaseDeDatos;
 
 import java.sql.*;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -12,6 +11,7 @@ import java.util.logging.Logger;
 public class Usuarios {
     private Conexion Con;
     private ResultSet Rs;
+    private Connection Conn;
     public Usuarios() {
     }
     public String[] ComprobarUsuario(String UsuarioABuscar) throws SQLException{
@@ -29,5 +29,26 @@ public class Usuarios {
         Rs.close();
         Con.CerrarConexiones();
         return Carac;
+    }
+        public String CrearUsuario(String Nom, String Contra, int Area){
+        Con = new Conexion();
+        Con.IniciarConexion();
+        PreparedStatement ps;
+        String sql;
+        try {
+            sql = "insert into Usuarios (Nick, Contraseña,Activo,Area) values (?,?,?,?);";
+            Conn = Con.getConexion();
+            ps = Conn.prepareStatement(sql);
+            ps.setString(1, Nom);
+            ps.setString(2, Contra);
+            ps.setBoolean(3, true);
+            ps.setInt(4, Area);
+            ps.executeUpdate();          
+            Con.CerrarConexiones();
+            Conn.close();
+            return "Se ingresó el usuario con exito";
+        } catch (SQLException ex) {
+            return "A ocurrido un error de conexion, intente más tarde";
+        }
     }
 }

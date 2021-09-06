@@ -29,7 +29,7 @@
          <jsp:useBean id="cn" class="BaseDeDatos.Conexion" scope="page"></jsp:useBean>
          <jsp:useBean id="Pz" class="BaseDeDatos.Piezas" scope="page"></jsp:useBean>           
                     <%
-                        ResultSet Rs = cn.IniciarConexion().executeQuery("select * from Piezas;");
+                        ResultSet Rs = cn.IniciarConexion().executeQuery("select * from Piezas where existencias > 4;");
                         ResultSet ago = cn.IniciarConexion().executeQuery("select * from Piezas where existencias < 5");
                     %>
         <!--Barra de navegación-->
@@ -65,13 +65,10 @@
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Manejo de muebles</a>
                                 <ul class="dropdown-menu">
                                     <li class="nav-item">
-                                        <a class="nav-link" href="ConsultarMueble.jsp">Información de muebles</a>
+                                        <a class="nav-link" href="InfoMueble.jsp">Informacion de Muebles</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="CrearMueble.jsp">Ensamble de muebles</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="ValidarMueble.jsp">Validación de muebles</a>
+                                        <a class="nav-link" href="EnsamblarMueble.jsp">Ensamble de muebles</a>
                                     </li>
                                 </ul>    
                             </li>
@@ -89,8 +86,10 @@
         <%
             if((request.getParameter("OrdenarAscendente")!=null)){
                Rs = cn.IniciarConexion().executeQuery("select * from Piezas order by existencias;");
+               ago = cn.IniciarConexion().executeQuery("select * from Piezas where existencias = -1");
             }else if(request.getParameter("OrdenarDescendente")!=null){
                  Rs = cn.IniciarConexion().executeQuery("select * from Piezas order by existencias desc;");
+                 ago = cn.IniciarConexion().executeQuery("select * from Piezas where existencias = -1");
             }
                     %>  
  <!--Ordenar Tabla de info-->
@@ -100,7 +99,7 @@
     <a>Ordenar según existencias:</a>  
     <input type="submit" value="Ordenar de mayor a menor" name="OrdenarDescendente"> 
     <input type="submit" value="Ordenar de menor a mayor" name="OrdenarAscendente"> 
-    <input type="submit" value="Existencias agotadas" name="Agotar"> 
+    <input type="submit" value="Recargar tabla" name="Agotar"> 
   </form>
   <!--Tabla de info agotados-->
     <p> 

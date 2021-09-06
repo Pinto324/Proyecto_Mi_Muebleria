@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import sun.font.TrueTypeGlyphMapper;
 
 /**
  *
@@ -25,7 +26,6 @@ public class Piezas {
 
     }
     public void CrearPieza(ModeloPieza Piezas){
-        JOptionPane.showMessageDialog(null, "Entro a crear pieza");
         Con = new Conexion();
         Con.IniciarConexion();
         PreparedStatement ps;
@@ -82,23 +82,31 @@ public class Piezas {
         try{
             Con = new Conexion();
             Con.IniciarConexion();
-            JOptionPane.showMessageDialog(null,"entro a hyper modificar");  
             String Ssql = "UPDATE Piezas SET Nombre_Pieza=?,  Costo=?, existencias=? WHERE Id_Pieza=?";
             PreparedStatement cambio = Con.getConexion().prepareStatement(Ssql);
             cambio.setString(1, Nombre);
             cambio.setDouble(2, Costo);
-            JOptionPane.showMessageDialog(null,"costo "+Costo);
             cambio.setInt(3, existencias);
             cambio.setInt(4, ID);
-            JOptionPane.showMessageDialog(null,"Existencias "+existencias);
             cambio.executeUpdate();
-            JOptionPane.showMessageDialog(null,"hizo update"); 
             Con.CerrarConexiones();
             return true;
         }catch(SQLException e){
-            JOptionPane.showMessageDialog(null,"fail"); 
             return false;
         }
+    }
+    public int BuscarPiezaReciente(){
+        Con = new Conexion();
+        int Id = -1;
+        try {
+            ResultSet UltimoDato = Con.IniciarConexion().executeQuery("select * from Piezas order by Id_Pieza desc;");        
+                if(UltimoDato.next()){
+                    Id = UltimoDato.getInt(1);
+                    return Id;
+                }
+        } catch (SQLException ex) {
+        }
+        return Id;
     }
     public String[] BuscarPorID(int ID){
         Con = new Conexion();
@@ -119,9 +127,52 @@ public class Piezas {
                 Con.CerrarConexiones();
                 return Carac;            
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "catch");
             Logger.getLogger(Piezas.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+        public int ExistenciasBuscarPorID(int ID){
+        Con = new Conexion();
+        try {
+            ResultSet BusquedaID = Con.IniciarConexion().executeQuery("SELECT * FROM Piezas WHERE Id_Pieza='"+ID+"';");
+            int Carac;
+                if(BusquedaID.next()){
+                    Carac = BusquedaID.getInt(4);
+                }else{
+                    BusquedaID.close();
+                    Con.CerrarConexiones();
+                    return -1;
+                }
+                BusquedaID.close();
+                Con.CerrarConexiones();
+                return Carac;            
+        } catch (SQLException ex) {
+            Logger.getLogger(Piezas.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return -2;
+    }
+    public boolean DescontarExistencias(int ID, int existencias){
+        try{
+            Con = new Conexion();
+            Con.IniciarConexion();
+            ResultSet BusquedaID = Con.IniciarConexion().executeQuery("SELECT * FROM Piezas WHERE Id_Pieza='"+ID+"';");
+            int Carac;
+                if(BusquedaID.next()){
+                    Carac = BusquedaID.getInt(4);
+                }else{
+                    Carac = -1;
+                }
+                    if(Carac!= -1){
+                        String Ssql = "UPDATE Piezas SET existencias=? WHERE Id_Pieza=?";
+                        PreparedStatement cambio = Con.getConexion().prepareStatement(Ssql);
+                        cambio.setInt(1, (Carac-existencias));
+                        cambio.setInt(2, ID);
+                        cambio.executeUpdate();
+                        Con.CerrarConexiones();
+                        return true;
+                    }
+        }catch(SQLException e){
+        }
+        return false;
     }
 }

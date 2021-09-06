@@ -56,13 +56,10 @@
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Manejo de muebles</a>
                                 <ul class="dropdown-menu">
                                     <li class="nav-item">
-                                        <a class="nav-link" href="ConsultarMueble.jsp">Información de muebles</a>
+                                        <a class="nav-link" href="InfoMueble.jsp">Informacion de Muebles</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="CrearMueble.jsp">Ensamble de muebles</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="ValidarMueble.jsp">Validación de muebles</a>
+                                        <a class="nav-link" href="EnsamblarMueble.jsp">Ensamble de muebles</a>
                                     </li>
                                 </ul>    
                             </li>

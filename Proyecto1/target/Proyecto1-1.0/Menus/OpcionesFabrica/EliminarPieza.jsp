@@ -44,24 +44,30 @@
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Manejo de Piezas</a>
                                     <ul class="dropdown-menu">
                                         <li class="nav-item">
-                                            <a class="nav-link" href="CrearPieza.jsp">Crear Pieza</a>
+                                            <a class="nav-link" href="CrearPieza.jsp">Crear Piezas</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="PiezaInformacion.jsp">Información de Piezas</a>
+                                            <a class="nav-link" href="PiezasInformacion.jsp">Información de Piezas</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="ModificarPieza.jsp">Modificar Pieza</a>
+                                            <a class="nav-link" href="ModificarPieza.jsp">Modificar Piezas</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="EliminarPieza.jsp">Eliminar Pieza</a>
+                                            <a class="nav-link" href="EliminarPieza.jsp">Eliminar Piezas</a>
                                         </li>
                                     </ul>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="EnsambleDeMuebles.jsp">Ensamble de muebles</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="ManejoDeMuebles.jsp">Manejo de piezas</a>
+                            <!--Barra de navegación de Muebles OWORANG-->
+                            <li class="nav-item-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Manejo de muebles</a>
+                                <ul class="dropdown-menu">
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="InfoMueble.jsp">Informacion de Muebles</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="EnsamblarMueble.jsp">Ensamble de muebles</a>
+                                    </li>
+                                </ul>    
                             </li>
                         </ul>
                         <ul class="navbar-nav ms-3"> 

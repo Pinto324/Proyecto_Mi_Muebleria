@@ -47,7 +47,10 @@
                                             <a class="nav-link" href="CrearPieza.jsp">Crear Piezas</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="PiezasInformacion.jsp">Consulta de Piezas</a>
+                                            <a class="nav-link" href="PiezasInformacion.jsp">Información de Piezas</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="ModificarPieza.jsp">Modificar Piezas</a>
                                         </li>
                                         <li class="nav-item">
                                             <a class="nav-link" href="EliminarPieza.jsp">Eliminar Piezas</a>
@@ -59,13 +62,10 @@
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Manejo de muebles</a>
                                 <ul class="dropdown-menu">
                                     <li class="nav-item">
-                                        <a class="nav-link" href="ConsultarMueble.jsp">Información de muebles</a>
+                                        <a class="nav-link" href="InfoMueble.jsp">Informacion de Muebles</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="CrearMueble.jsp">Ensamble de muebles</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="ValidarMueble.jsp">Validación de muebles</a>
+                                        <a class="nav-link" href="EnsamblarMueble.jsp">Ensamble de muebles</a>
                                     </li>
                                 </ul>    
                             </li>
@@ -121,7 +121,7 @@
                     }
                     %>
                     </select></th>         
-                    <tr>
+                <tr>
                     <th><input type="submit" value="Cargar Datos del id" name="BtnCargar" > </th>
                 </tr><tr>
                     <th><input type="submit" value="Modificar Pieza" name="BtnModificar"> </th>

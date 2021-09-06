@@ -9,6 +9,7 @@ import BaseDeDatos.Piezas;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 /**
@@ -67,8 +68,7 @@ public class ControladorPieza {
             return false;
         }
     }
-    public boolean ModificarValor(String Id,String Nombre, String Precio, String Ex){
-                             JOptionPane.showMessageDialog(null, "entro a modificar");  
+    public boolean ModificarValor(String Id,String Nombre, String Precio, String Ex){ 
         int Ids =  Integer.valueOf(Id);           
         double P = Double.parseDouble(Precio);
         int Exis = Integer.valueOf(Ex);
@@ -78,5 +78,22 @@ public class ControladorPieza {
             return false;
         }
     }
-    
+    public boolean HayExistencias(int id, int CantN, int CantA){
+       int Existencias = PiezasBD.ExistenciasBuscarPorID(id);
+       if(Existencias!=-1){
+           if(Existencias>=(CantN*CantA)){
+            return true;
+           }
+       }
+       return false;
+    }
+    public boolean QuitarPiezas(ArrayList<Integer> Id,ArrayList<Integer> cant){
+        for (int i = 0; i < Id.size(); i++) {
+            if(PiezasBD.DescontarExistencias(Id.get(i), cant.get(i))){
+            }else{
+            return false;
+            }
+        }
+        return true;
+    }
 }

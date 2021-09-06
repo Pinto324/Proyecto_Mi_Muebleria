@@ -9,6 +9,7 @@ import java.sql.SQLException;
  * @author branp
  */
 public class ValidadorDeLogin {
+    private static String NombreUsuario;
     private String Nick;
     private String Contraseña;
     private Usuarios User = new Usuarios();
@@ -16,6 +17,10 @@ public class ValidadorDeLogin {
         this.Nick = Nick;
         this.Contraseña = Contraseña;
     }
+
+    public ValidadorDeLogin() {
+    }
+    
 
     public String getNick() {
         return Nick;
@@ -31,6 +36,14 @@ public class ValidadorDeLogin {
 
     public void setContraseña(String Contraseña) {
         this.Contraseña = Contraseña;
+    }
+
+    public static String getNombreUsuario() {
+        return NombreUsuario;
+    }
+
+    public static void setNombreUsuario(String NombreUsuario) {
+        ValidadorDeLogin.NombreUsuario = NombreUsuario;
     }
     //Metodos:
     public int[] ComprobarUsuario() throws SQLException{

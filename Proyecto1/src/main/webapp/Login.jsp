@@ -61,34 +61,40 @@
                     HttpSession Sesion = request.getSession();
                     switch(Us[1]){
                         case -1:
-                            out.print("Contraseña incorrecta");
+                            out.print("<script type='text/javascript'>alert('El nombre de usuario o la contraseña no coinciden')</script>");
                             break;
                         case 1:
                             Sesion.setAttribute("user", CampoU);
                             Sesion.setAttribute("nivel", "1");
+                            Inicio.setNombreUsuario(CampoU);
                             response.sendRedirect("Menus/Fabrica.jsp");
                             break;
                         case 2:
                             response.sendRedirect("Menus/Ventas.jsp");
                             break;
                         case 3:
-                            out.print("financiacion xdxd");
+                            Sesion.setAttribute("user", CampoU);
+                            Sesion.setAttribute("nivel", "3");
+                            Inicio.setNombreUsuario(CampoU);
+                            response.sendRedirect("Menus/Administracion.jsp");
                             break;
                         default:
                             break;
                     }
                 }else if(Us[0]==0){
-                    out.print("El usuario a sido inhabilitado, porfavor comuniquese con administración si existe un error");
+                    out.print("<script type='text/javascript'>alert('El usuario a sido inhabilitado, porfavor comuniquese con administración si existe un error')</script>");
                 }else{
-                    out.print("No se encontró un usuario en el sistema con ese nombre");
+                     out.print("<script type='text/javascript'>alert('No se encontró un usuario en el sistema con ese nombre')</script>");
                     }
-            }else{  
-                out.print("llene los campos deseados");
+            }else{ 
+                out.print("<script type='text/javascript'>alert('llene los campos deseados')</script>");
             }
         }
         //Cerrando sesion
         if(request.getParameter("cerrar")!=null){
             session.invalidate();
+            ValidadorDeLogin Inicio = new ValidadorDeLogin();
+            Inicio.setNombreUsuario(null);
         }
     %>
 </html>
